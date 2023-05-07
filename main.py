@@ -12,7 +12,11 @@ screen = pygame.display.set_mode((500, 650))
 pygame.display.set_caption('Balloon Pop')
 clock = pygame.time.Clock()
 my_font = pygame.font.Font('font/Pixeltype.ttf', 76)
+my_score_font = pygame.font.Font('font/Pixeltype.ttf', 50)
+darts_font = pygame.font.Font('font/Pixeltype.ttf', 50)
+game_over = pygame.font.Font('font/Pixeltype.ttf', 85)
 
+my_score = 0
 sky_surface = pygame.image.load('images/sky.png')
 my_text_surface = my_font.render('Balloon Pop Game', False, 'Yellow')
 pink_balloon_surface = pygame.image.load('images/balloon-pink.png').convert_alpha()
@@ -40,7 +44,7 @@ dart_y_pos = 515
 # MOVING LEFT AND RIGHT
 moving_left = False
 moving_right = False
-
+number_of_darts = 5
 shoot_dart = False
 
 dart_location = [350, 550]
@@ -52,10 +56,13 @@ while True:
              pygame.quit()
              exit()
 
+    go_surface = darts_font.render(str('GAME OVER'), False, 'black')
+
     # If keydown == SPACE, then throw
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 dart_y_pos = 515
+                number_of_darts -= 1
                 shoot_dart = True
             if event.key == pygame.K_LEFT:
                 moving_left = True
@@ -71,7 +78,8 @@ while True:
         # If keydown == LEFT, then move rocket left
         # If keydown == RIGHT, then move rocket right
 
-
+    my_score_surface = my_score_font.render(str('Score: ') + str(my_score), False, 'coral3')
+    my_darts_surface = darts_font.render(str('Darts: ') + str(number_of_darts), False, 'coral3')
 
     if moving_left == True:
         dart_location[0] -= 5
@@ -80,7 +88,8 @@ while True:
 
     screen.blit(sky_surface,(0,0))
     screen.blit(my_text_surface,(50,50))
-
+    screen.blit(my_score_surface,(300,125))
+    screen.blit(my_darts_surface,(300,150))
     screen.blit(dart_gun,dart_location)
     shoot_dart_x = dart_location[0] + 35
 
@@ -112,12 +121,16 @@ while True:
     # Add text on right corner top to update score variable if the dart collides with the balloon
     if blue_balloon_y_pos == dart_y_pos:
         blue_balloon_surface.set_alpha(alpha)
+        my_score += 1
     if pink_balloon_y_pos == dart_y_pos:
         pink_balloon_surface.set_alpha(alpha)
+        my_score += 1
     if blue_balloon_y_pos_2 == dart_y_pos:
         blue_balloon_surface_2.set_alpha(alpha)
+        my_score += 1
     if pink_balloon_y_pos_2 == dart_y_pos:
         pink_balloon_surface_2.set_alpha(alpha)
+        my_score += 1
 
     pygame.display.update()
     clock.tick(60)
