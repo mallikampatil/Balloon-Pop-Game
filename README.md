@@ -15,7 +15,8 @@ Balloon pop game created using PyGames library in Python for Global Gaming Hack 
 In order to run, follow these simple steps: 
 1. First install PyGames using pip install. 
 2. Install other libraries that are needed such as import randow. 
-3. There will also be other libraries that might need to be installed.  
+3. Once installed, you can use an ide like PyCharm. 
+4. You can just click on "Run" or the green arrow button to play. 
 
 ## Final Summary 
 
